@@ -267,10 +267,10 @@
         btn.textContent = 'Sending...';
         fetch('https://services.leadconnectorhq.com/hooks/ZF2Qjd4J1GmT9w5XbinN/webhook-trigger/fDui4uIOYvjZunIsOJXZ', {
           method: 'POST',
+          mode: 'no-cors',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({first_name: firstName, email: email, source: 'TPMA Site', tag: 'TPMA'})
         })
-        .then(function(r) { return r.json(); })
         .then(function() {
           msg.style.display = 'block';
           msg.textContent = "You're in. First briefing arrives Thursday.";
