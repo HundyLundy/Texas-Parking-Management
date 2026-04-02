@@ -272,11 +272,15 @@
           body: JSON.stringify({first_name: firstName, email: email, source: 'TPMA Site', tag: 'TPMA'})
         })
         .then(function() {
-          msg.style.display = 'block';
-          msg.textContent = "You're in. First briefing arrives Thursday.";
-          btn.textContent = 'Done ✓';
-          document.getElementById('tpma-first-name').value = '';
-          document.getElementById('tpma-email').value = '';
+          // Replace the entire form with a thank-you message
+          var form = document.getElementById('tpma-signup-form');
+          form.innerHTML = [
+            '<div style="text-align:center;padding:24px 0;">',
+            '<div style="font-size:2.2rem;margin-bottom:12px;">✓</div>',
+            '<div style="font-family:var(--font-serif);font-size:1.5rem;color:#fff;font-weight:600;margin-bottom:10px;">You\'re in, ' + firstName + '.</div>',
+            '<div style="font-family:var(--font-sans);font-size:0.95rem;color:rgba(255,255,255,0.75);line-height:1.6;">Your first briefing arrives this Thursday.<br>Check your inbox — and your spam folder just in case.</div>',
+            '</div>'
+          ].join('');
         })
         .catch(function() {
           msg.style.display = 'block';
