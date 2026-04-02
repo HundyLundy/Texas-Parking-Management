@@ -242,21 +242,47 @@
       <h2 class="nl-headline">Join the Texas Parking Management Association</h2>
       <p class="nl-sub">Get enforcement updates, revenue strategy, and market intelligence delivered every Thursday — or join the association and get listed in the Texas Parking Owners Registry.</p>
       
-      <div class="nl-two-track">
-        <div class="nl-track">
-          <div class="nl-track-label">Option 1: Weekly Briefing (Free)</div>
-          <form class="nl-form" onsubmit="return false;">
-            <input class="nl-input" type="email" placeholder="your@email.com" />
-            <button class="nl-btn" type="submit">Get Briefing</button>
-          </form>
-          <div class="nl-track-desc">Newsletter only. No membership required.</div>
+      <form class="nl-form-full" id="tpma-signup-form" onsubmit="submitTPMA(event)">
+        <div class="nl-form-row">
+          <input class="nl-input" type="text" id="tpma-first-name" placeholder="First name" required />
+          <input class="nl-input" type="email" id="tpma-email" placeholder="your@email.com" required />
+          <button class="nl-btn" type="submit">Sign Me Up</button>
         </div>
-        <div class="nl-track">
-          <div class="nl-track-label">Option 2: Full Membership</div>
-          <a href="#join" class="nl-btn-join">Join TPMA →</a>
-          <div class="nl-track-desc">Newsletter + registry listing + member resources.</div>
-        </div>
-      </div>
+        <div id="tpma-form-msg" style="display:none;margin-top:12px;font-family:var(--font-sans);font-size:0.9rem;color:#c8a96e;"></div>
+      </form>
+      <div class="nl-fine" style="margin-top:10px;">No spam. No sales emails. Just the weekly Texas parking briefing.</div>
+
+      <script>
+      function submitTPMA(e) {
+        e.preventDefault();
+        var btn = e.target.querySelector('button');
+        var msg = document.getElementById('tpma-form-msg');
+        var firstName = document.getElementById('tpma-first-name').value.trim();
+        var email = document.getElementById('tpma-email').value.trim();
+        btn.disabled = true;
+        btn.textContent = 'Sending...';
+        fetch('https://services.leadconnectorhq.com/hooks/ZF2Qjd4J1GmT9w5XbinN/webhook-trigger/fDui4uIOYvjZunIsOJXZ', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({first_name: firstName, email: email, source: 'TPMA Site', tag: 'TPMA'})
+        })
+        .then(function(r) { return r.json(); })
+        .then(function() {
+          msg.style.display = 'block';
+          msg.textContent = "You're in. First briefing arrives Thursday.";
+          btn.textContent = 'Done ✓';
+          document.getElementById('tpma-first-name').value = '';
+          document.getElementById('tpma-email').value = '';
+        })
+        .catch(function() {
+          msg.style.display = 'block';
+          msg.style.color = '#ff6b6b';
+          msg.textContent = 'Something went wrong — email us at info@texasparkingmanagement.com';
+          btn.disabled = false;
+          btn.textContent = 'Sign Me Up';
+        });
+      }
+      </script>
 
       <div class="nl-fine">No spam. Unsubscribe anytime. Texas-focused, property-owner-first.</div>
     </div>

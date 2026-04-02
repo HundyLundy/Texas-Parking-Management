@@ -418,6 +418,8 @@ nav {
   margin-bottom: 12px;
 }
 .nl-form { display: flex; gap: 0; }
+.nl-form-full { width: 100%; max-width: 640px; margin: 0 auto; }
+.nl-form-row { display: flex; gap: 0; width: 100%; }
 .nl-input {
   flex: 1;
   padding: 11px 14px;
